@@ -63,12 +63,12 @@ public class Population {
         population.add(individual);
     }
 
-    public Evaluation evaluatePopulation(Population population, int id) {
-        BigDecimal min = population.getPopulation().get(0).evaluate();
+    public Evaluation evaluatePopulation(int id) {
+        BigDecimal min = population.get(0).evaluate();
         BigDecimal max = min;
         BigDecimal sum = BigDecimal.ZERO;
 
-        for (Individual individual : population.getPopulation()) {
+        for (Individual individual : population) {
             BigDecimal temp = individual.evaluate();
 
             if (temp.compareTo(min) < 0) {

@@ -113,4 +113,8 @@ class Individual {
         BigDecimal differenceOfVelocities = MAX_SPEED.subtract(MIN_SPEED);
         return MAX_SPEED.subtract(percentOfCapacity.multiply(differenceOfVelocities));
     }
+
+    public boolean isBetter(Individual other) {
+        return evaluation.compareTo(other.getEvaluation()) > 0;
+    }
 }

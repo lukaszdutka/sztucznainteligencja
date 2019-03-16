@@ -70,12 +70,12 @@ public class Individuals {
 
     static Individual selectByTournament(Population pop) {
         List<Individual> population = pop.getPopulation();
-        ArrayList<Individual> tournament = new ArrayList<>();
-        while (tournament.size() < TOURNAMENT_SIZE) {
-            tournament.add(population.get(R.nextInt(population.size())));
+        Individual best = population.get(R.nextInt(population.size()));
+        for (int i = 0; i < TOURNAMENT_SIZE - 1; i++) {
+            Individual temp = population.get(R.nextInt(population.size()));
+            best = temp.isBetter(best) ? temp : best;
         }
-
-        return tournament.stream().max(Comparator.comparing(Individual::getEvaluation)).get();
+        return best;
     }
 
 //    public static Individual selectByRoulette(ArrayList<Individual> population) {

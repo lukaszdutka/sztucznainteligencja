@@ -15,28 +15,24 @@ public class Main {
 
     public static void main(String[] args) {
 
-        if (true) {
-            Configuration conf = new Configuration("hard_1.ttp");
+        Configuration conf = new Configuration("hard_1.ttp");
 
-            Population pop = Population.createRandomPopulation(NODES);
-            Evaluation previous = pop.evaluatePopulation(pop, 1);
-            System.out.println(Configuration.FILE_NAME);
-            System.out.println("id najgorszy sredni najlepszy");
-            System.out.println(previous);
+        Population pop = Population.createRandomPopulation(NODES);
+        Evaluation previous = pop.evaluatePopulation(1);
+        System.out.println(Configuration.FILE_NAME);
+        System.out.println("id najgorszy sredni najlepszy");
+        System.out.println(previous);
 
-            for (int i = 2; i <= ITERATIONS; i++) {
-                pop = Population.createNextPopulation(pop);
-                Evaluation newEvaluation = pop.evaluatePopulation(pop, i);
-                newEvaluation.update(previous);
-                System.out.println(newEvaluation);
-                previous = newEvaluation;
-            }
+        for (int i = 2; i <= ITERATIONS; i++) {
+            pop = Population.createNextPopulation(pop);
+            Evaluation newEvaluation = pop.evaluatePopulation(i);
+            newEvaluation.update(previous);
+            System.out.println(newEvaluation);
+            previous = newEvaluation;
         }
-        System.out.println();
-        System.out.println();
+
         System.out.println();
 
-//        if (true) {
 //            Configuration conf = new Configuration("medium_2.ttp");
 //
 //            Population pop = Population.createRandomPopulation(NODES);
@@ -52,12 +48,10 @@ public class Main {
 //                System.out.println(newEvaluation);
 //                previous = newEvaluation;
 //            }
-//        }
 //        System.out.println();
 //        System.out.println();
 //        System.out.println();
 //
-//        if (true) {
 //            Configuration conf = new Configuration("hard_2.ttp");
 //
 //            Population pop = Population.createRandomPopulation(NODES);
@@ -73,7 +67,6 @@ public class Main {
 //                System.out.println(newEvaluation);
 //                previous = newEvaluation;
 //            }
-//        }
 
 //
 //        String[] files = new String[]{"trivial_0.ttp", "trivial_1.ttp",
