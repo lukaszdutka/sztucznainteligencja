@@ -14,17 +14,18 @@ import static zadanie1.Configuration.*;
 public class Main {
 
     public static void main(String[] args) {
-
-        Configuration conf = new Configuration("hard_1.ttp");
-
-        Population pop = Population.createRandomPopulation(NODES);
-        Evaluation previous = pop.evaluatePopulation(1);
+        new Configuration("hard_1.ttp");
         System.out.println(Configuration.FILE_NAME);
+
+        Population pop = Population.createRandomPopulation(Configuration.NODES);
+        Evaluation previous = pop.evaluatePopulation(1);
+
         System.out.println("id najgorszy sredni najlepszy");
         System.out.println(previous);
 
-        for (int i = 2; i <= ITERATIONS; i++) {
+        for (int i = 2; i <= Configuration.ITERATIONS; i++) {
             pop = Population.createNextPopulation(pop);
+
             Evaluation newEvaluation = pop.evaluatePopulation(i);
             newEvaluation.update(previous);
             System.out.println(newEvaluation);
