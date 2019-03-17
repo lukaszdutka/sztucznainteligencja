@@ -31,7 +31,7 @@ public class Population {
         return new Population(population);
     }
 
-    public Population createNextPopulation() {
+    Population createNextPopulation() {
         Population pop = new Population();
 
         for (int j = 0; j < POPULATION_SIZE / 2; j++) {
@@ -56,7 +56,7 @@ public class Population {
         return Individuals.selectByTournament(this);
     }
 
-    public List<Individual> getPopulation() {
+    List<Individual> getPopulation() {
         return population;
     }
 
