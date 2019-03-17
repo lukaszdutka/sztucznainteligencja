@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Evaluation {
 
-    int id;
+    int generation;
     BigDecimal best;
     BigDecimal worst;
     BigDecimal average;
@@ -22,7 +22,7 @@ public class Evaluation {
 
     @Override
     public String toString() {
-        return id + "\t" + worst.toBigInteger() + "\t" + average.toBigInteger() + "\t" + best.toBigInteger();
+        return generation + "\t" + worst.toBigInteger() + "\t" + average.toBigInteger() + "\t" + best.toBigInteger();
     }
 
     public BigDecimal getBest() {

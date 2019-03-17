@@ -31,11 +31,12 @@ public class Population {
         return new Population(population);
     }
 
-    public static Population createNextPopulation(Population previousPopulation) {
+    public Population createNextPopulation() {
         Population pop = new Population();
+
         for (int j = 0; j < POPULATION_SIZE / 2; j++) {
-            Individual father = getParent(previousPopulation);
-            Individual mother = getParent(previousPopulation);
+            Individual father = getParent();
+            Individual mother = getParent();
 
             if (father == mother) {
                 j--;
@@ -51,8 +52,8 @@ public class Population {
         return pop;
     }
 
-    private static Individual getParent(Population previous) {
-        return Individuals.selectByTournament(previous);
+    private Individual getParent() {
+        return Individuals.selectByTournament(this);
     }
 
     public List<Individual> getPopulation() {
@@ -63,7 +64,7 @@ public class Population {
         population.add(individual);
     }
 
-    public Evaluation evaluatePopulation(int id) {
+    public Evaluation evaluate(int generation) {
         BigDecimal min = population.get(0).evaluate();
         BigDecimal max = min;
         BigDecimal sum = BigDecimal.ZERO;
@@ -81,6 +82,6 @@ public class Population {
         }
 
         BigDecimal average = sum.divide(new BigDecimal(POPULATION_SIZE), MathContext.DECIMAL64);
-        return new Evaluation(id, max, min, average);
+        return new Evaluation(generation, max, min, average);
     }
 }

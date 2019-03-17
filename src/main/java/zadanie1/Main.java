@@ -18,15 +18,15 @@ public class Main {
         System.out.println(Configuration.FILE_NAME);
 
         Population pop = Population.createRandomPopulation(Configuration.NODES);
-        Evaluation previous = pop.evaluatePopulation(1);
+        Evaluation previous = pop.evaluate(1);
 
         System.out.println("id najgorszy sredni najlepszy");
         System.out.println(previous);
 
         for (int i = 2; i <= Configuration.ITERATIONS; i++) {
-            pop = Population.createNextPopulation(pop);
+            pop = pop.createNextPopulation();
 
-            Evaluation newEvaluation = pop.evaluatePopulation(i);
+            Evaluation newEvaluation = pop.evaluate(i);
             newEvaluation.update(previous);
             System.out.println(newEvaluation);
             previous = newEvaluation;
