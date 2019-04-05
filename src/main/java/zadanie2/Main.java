@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        for (int n = 8; n < 11; n++){
+        int n = 6;
 
         Solver queenSolver = new QueenSolver(n);
         Solver latinSquareSolver = new LatinSquareSolver(n);
@@ -14,7 +14,5 @@ public class Main {
 
         latinSquareSolver.solve(Method.BACK_TRACKING);
         latinSquareSolver.solve(Method.FORWARD_CHECKING);
-        }
-
     }
 }

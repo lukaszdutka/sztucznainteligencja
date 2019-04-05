@@ -1,10 +1,10 @@
 package zadanie2;
 
-public abstract class Solver {
+abstract class Solver {
 
     int n;
 
-    public Solver(int n) {
+    Solver(int n) {
         this.n = n;
     }
 

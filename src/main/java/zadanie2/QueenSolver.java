@@ -33,10 +33,6 @@ class QueenSolver extends Solver {
             return Result.SOLUTION_FOUND;
         }
 
-        if (atLeastOneDomainIsEmpty(originalDomains)) {
-            return Result.INVALID_EMPTY_DOMAIN;
-        }
-
         boolean[] row = originalDomains[currentRow];
         for (int i = 0; i < row.length; i++) {
             if (queenCantBePlaced(row[i])) {
@@ -47,6 +43,10 @@ class QueenSolver extends Solver {
 
             fillRestOfCurrentRowWithCant(domains, currentRow, i);
             updateDomainsBasedOnPlacedQueen(domains, currentRow, i);
+
+            if (atLeastOneDomainIsEmpty(domains)) {
+                return Result.INVALID_EMPTY_DOMAIN;
+            }
 
             Result result = forwardChecking(currentRow + 1, domains);
 
@@ -169,15 +169,16 @@ class QueenSolver extends Solver {
             return Result.SOLUTION_FOUND;
         }
 
-        if (violatesConstraints(previousSolution)) {
-            return Result.INVALID_VIOLATES_CONSTRAINTS;
-        }
 
         boolean[] row = previousSolution[currentRow];
         for (int i = 0; i < row.length; i++) {
             boolean[][] solution = clone(previousSolution);
 
             solution[currentRow][i] = true; //put queen
+
+            if (violatesConstraints(solution)) {
+                continue;
+            }
 
             Result result = backTracking(currentRow + 1, solution);
 
