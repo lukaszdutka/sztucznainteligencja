@@ -69,8 +69,8 @@ class LatinSquareSolver extends Solver {
     }
 
     private void updateThis(boolean[][][] domains, int currentRow, int currentColumn, int number) {
-        for(int i = 0; i < domains.length; i++){
-            if(i != number){
+        for (int i = 0; i < domains.length; i++) {
+            if (i != number) {
                 domains[currentRow][currentColumn][i] = false;
             }
         }
@@ -106,41 +106,6 @@ class LatinSquareSolver extends Solver {
             }
         }
         return newDomain;
-    }
-
-    private void updateDomainsBasedOnPlacedQueen(boolean[][] domains, int row, int column) {
-        updateDomainsColumn(domains, row, column);
-        updateDomainsDiagonalUpDown(domains, row, column);
-        updateDomainsDiagonalDownUp(domains, row, column);
-    }
-
-    private void updateDomainsDiagonalDownUp(boolean[][] domains, int row, int column) {
-        row += 1;
-        column -= 1;
-        for (; row < domains.length && column >= 0; row++, column--) {
-            domains[row][column] = false;
-        }
-    }
-
-    private void updateDomainsDiagonalUpDown(boolean[][] domains, int row, int column) {
-        row += 1;
-        column += 1;
-        for (; row < domains.length && column < domains.length; row++, column++) {
-            domains[row][column] = false;
-        }
-    }
-
-    private void updateDomainsColumn(boolean[][] domains, int row, int column) {
-        for (int i = row + 1; i < domains.length; i++) {
-            domains[i][column] = false;
-        }
-    }
-
-    private void fillRestOfCurrentRowWithCant(boolean[][] domains, int rowIndex, int canPlaceHere) {
-        boolean[] row = domains[rowIndex];
-        for (int i = 0; i < row.length; i++) {
-            row[i] = i == canPlaceHere; //set (all but expected) to false
-        }
     }
 
     private boolean atLeastOneDomainIsEmpty(boolean[][][] domain) {
@@ -189,96 +154,131 @@ class LatinSquareSolver extends Solver {
         }
         return domain;
     }
-//
+
+    //
     @Override
     void startBackTracking() {
-//        backTrackingRecursionCounter = 0;
-//
-//        boolean[][] solution = new boolean[n][n];
-//        backTracking(0, solution);
-//
-//        printAtEnd(backTrackingRecursionCounter, "backTracking");
-    }
-//
-//    private Result backTracking(int currentRow, boolean[][] previousSolution) {
-//        backTrackingRecursionCounter++;
-//
-//        if (currentRow == n) {
-//            printSolution(previousSolution);
-//            return Result.SOLUTION_FOUND;
-//        }
-//
-//
-//        boolean[] row = previousSolution[currentRow];
-//        for (int i = 0; i < row.length; i++) {
-//            boolean[][] solution = clone(previousSolution);
-//
-//            solution[currentRow][i] = true; //put queen
-//
-//            if (violatesConstraints(solution)) {
-//                continue;
-//            }
-//
-//            Result result = backTracking(currentRow + 1, solution);
-//
-//            if (result == Result.INVALID_VIOLATES_CONSTRAINTS) {
-//                continue;
-//            }
-//            return result;
-//        }
-//
-//        return Result.INVALID_VIOLATES_CONSTRAINTS;
-//    }
+        backTrackingRecursionCounter = 0;
 
-    private boolean violatesConstraints(boolean[][] solution) {
-        for (int row = 0; row < solution.length; row++) {
-            for (int column = 0; column < solution.length; column++) {
-                if (solution[row][column]) { //hasQueen
-                    if (checkConstraints(solution, row, column)) {
-                        return true;
-                    }
-                }
+        boolean[][][] solution = new boolean[n][n][n];
+        backTracking(0, 0, solution);
+
+        printAtEnd(backTrackingRecursionCounter, "backTracking");
+    }
+
+    private Result backTracking(int currentRow, int currentColumn, boolean[][][] previousSolution) {
+        backTrackingRecursionCounter++;
+
+        if (currentRow == n) {
+            printSolution(previousSolution);
+            return Result.SOLUTION_FOUND;
+        }
+
+
+        boolean[] cell = previousSolution[currentRow][currentColumn];
+
+        for (int i = 0; i < cell.length; i++) {
+            boolean[][][] solution = clone(previousSolution);
+
+            solution[currentRow][currentColumn][i] = true; //put i number
+
+            if (violatesConstraints(solution)) {
+                continue;
+            }
+
+            if (currentColumn == n - 1) {
+                currentColumn = -1;
+                currentRow++;
+            }
+
+            Result result = backTracking(currentRow, currentColumn + 1, solution);
+
+            if (result == Result.INVALID_VIOLATES_CONSTRAINTS) {
+                continue;
+            }
+            return result;
+        }
+
+        return Result.INVALID_VIOLATES_CONSTRAINTS;
+    }
+
+    private boolean violatesConstraints(boolean[][][] solution) {
+        int[][] flatSolution = getFlatSolution(solution);
+        return violatesRowConstraint(flatSolution) || violatesColumnConstraint(flatSolution);
+    }
+
+    private boolean violatesColumnConstraint(int[][] flatSolution) {
+        for (int i = 0; i < flatSolution.length; i++) {
+            if (columnIsBad(flatSolution, i)) {
+                return true;
             }
         }
         return false;
     }
 
-    private boolean checkConstraints(boolean[][] solution, int row, int column) {
-        boolean inColumn = checkConstraintColumn(solution, row, column);
-        boolean inDiagonalUpDown = checkConstraintDiagonalUpDown(solution, row, column);
-        boolean inDiagonalDownUp = checkConstraintDiagonalDownUp(solution, row, column);
-        return inColumn || inDiagonalUpDown || inDiagonalDownUp;
-    }
+    private boolean columnIsBad(int[][] flatSolution, int column) {
+        int[] occurences = new int[n];
+        for (int[] row : flatSolution) {
+            int number = row[column];
+            if (number == -1) {
+                continue;
+            }
+            occurences[number]++;
+        }
 
-    private boolean checkConstraintDiagonalDownUp(boolean[][] solution, int row, int column) {
-        row--;
-        column++;
-        for (; row >= 0 && column < solution.length; row--, column++) {
-            if (solution[row][column]) { //hasQueen
-                return true; //violates
+        for (int occurrence : occurences) {
+            if (occurrence > 1) {
+                return true;
             }
         }
         return false;
     }
 
-    private boolean checkConstraintDiagonalUpDown(boolean[][] solution, int row, int column) {
-        row--;
-        column--;
-        for (; row >= 0 && column >= 0; row--, column--) {
-            if (solution[row][column]) { //hasQueen
-                return true; //violates
+    private boolean violatesRowConstraint(int[][] flatSolution) {
+        for (int i = 0; i < flatSolution.length; i++) {
+            int[] row = flatSolution[i];
+            if (rowIsBad(row)) {
+                return true;
             }
         }
         return false;
     }
 
-    private boolean checkConstraintColumn(boolean[][] solution, int row, int column) {
-        row--;
-        for (; row >= 0; row--) {
-            if (solution[row][column]) { //hasQueen
-                return true; //violates
+    private boolean rowIsBad(int[] row) {
+        int[] occurences = new int[n];
+        for (int number : row) {
+            if (number == -1) {
+                continue;
+            }
+            occurences[number]++;
+        }
+
+        for (int occurrence : occurences) {
+            if (occurrence > 1) {
+                return true;
             }
         }
         return false;
     }
+
+    private int[][] getFlatSolution(boolean[][][] solution) {
+        int[][] numbers = new int[n][n];
+        for (int i = 0; i < numbers.length; i++) {
+            for (int j = 0; j < numbers[i].length; j++) {
+                numbers[i][j] = getFirstOf(solution[i][j]);
+            }
+        }
+        return numbers;
+    }
+
+    private int getFirstOf(boolean[] booleans) {
+        for (int i = 0; i < booleans.length; i++) {
+            if (booleans[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
 }
