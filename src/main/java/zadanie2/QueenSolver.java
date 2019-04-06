@@ -2,8 +2,8 @@ package zadanie2;
 
 class QueenSolver extends Solver {
 
-    int forwardCheckingRecursionCounter = 0;
-    int backTrackingRecursionCounter = 0;
+    private int forwardCheckingRecursionCounter = 0;
+    private int backTrackingRecursionCounter = 0;
 
     QueenSolver(int n) {
         super(n);
@@ -21,8 +21,7 @@ class QueenSolver extends Solver {
 
     private void printAtEnd(int counter, String methodName) {
         System.out.println("Recursion calls: " + counter);
-        System.out.println("\nQueenSolver: "+methodName+"() ends.\n\n");
-        System.out.println("--------------------------------------------------");
+        System.out.println("QueenSolver: "+methodName+"() ends.\n\n");
     }
 
     private Result forwardChecking(int currentRow, boolean[][] originalDomains) {
