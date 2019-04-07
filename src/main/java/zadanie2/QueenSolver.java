@@ -4,6 +4,8 @@ class QueenSolver extends Solver {
 
     private int forwardCheckingRecursionCounter = 0;
     private int backTrackingRecursionCounter = 0;
+    private long time;
+
 
     QueenSolver(int n) {
         super(n);
@@ -11,6 +13,7 @@ class QueenSolver extends Solver {
 
     @Override
     void startForwardChecking() {
+        time = System.nanoTime();
         forwardCheckingRecursionCounter = 0;
 
         boolean[][] domain = fillDomain();
@@ -20,8 +23,10 @@ class QueenSolver extends Solver {
     }
 
     private void printAtEnd(int counter, String methodName) {
-        System.out.println("Recursion calls: " + counter);
-        System.out.println("QueenSolver: "+methodName+"() ends.\n\n");
+//        System.out.print(counter + "\t");
+        System.out.print((System.nanoTime()-time)*1.0/1000000+"\t");
+//        System.out.println("Recursion calls: " + counter);
+//        System.out.println("QueenSolver: "+methodName+"() ends.\n\n");
     }
 
     private Result forwardChecking(int currentRow, boolean[][] originalDomains) {
@@ -127,17 +132,17 @@ class QueenSolver extends Solver {
     }
 
     private void printSolution(boolean[][] solution) {
-        System.out.println("---------- SOLUTION ----------");
-        for (boolean[] rows : solution) {
-            for (boolean canBePlacedHere : rows) {
-                if (canBePlacedHere) {
-                    System.out.print("Q ");
-                } else {
-                    System.out.print("□ ");
-                }
-            }
-            System.out.println();
-        }
+//        System.out.println("---------- SOLUTION ----------");
+//        for (boolean[] rows : solution) {
+//            for (boolean canBePlacedHere : rows) {
+//                if (canBePlacedHere) {
+//                    System.out.print("Q ");
+//                } else {
+//                    System.out.print("□ ");
+//                }
+//            }
+//            System.out.println();
+//        }
     }
 
     private boolean[][] fillDomain() {
@@ -152,6 +157,7 @@ class QueenSolver extends Solver {
 
     @Override
     void startBackTracking() {
+        time = System.nanoTime();
         backTrackingRecursionCounter= 0;
 
         boolean[][] solution = new boolean[n][n];

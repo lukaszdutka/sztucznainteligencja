@@ -8,9 +8,11 @@ class LatinSquareSolver extends Solver {
 
     private int forwardCheckingRecursionCounter = 0;
     private int backTrackingRecursionCounter = 0;
+    private long time;
 
     @Override
     void startForwardChecking() {
+        time = System.nanoTime();
         forwardCheckingRecursionCounter = 0;
 
         boolean[][][] domain = fillDomain();
@@ -20,8 +22,10 @@ class LatinSquareSolver extends Solver {
     }
 
     private void printAtEnd(int counter, String methodName) {
-        System.out.println("Recursion calls: " + counter);
-        System.out.println("\nLatinSquare: " + methodName + "() ends.\n\n");
+//        System.out.print(counter + "\t");
+        System.out.print((System.nanoTime()-time)*1.0/1000000+"\t");
+//        System.out.println("Recursion calls: " + counter);
+//        System.out.println("\nLatinSquare: " + methodName + "() ends.\n\n");
     }
 
     private Result forwardChecking(int currentRow, int currentColumn, boolean[][][] originalDomains) {
@@ -129,18 +133,18 @@ class LatinSquareSolver extends Solver {
     }
 
     private void printSolution(boolean[][][] solution) {
-        System.out.println("---------- SOLUTION ----------");
-        for (boolean[][] rows : solution) {
-            for (boolean[] domainOfCell : rows) {
-                for (int i = 0; i < domainOfCell.length; i++) {
-                    if (domainOfCell[i]) {
-                        System.out.print(i + " ");
-                        break;
-                    }
-                }
-            }
-            System.out.println();
-        }
+//        System.out.println("---------- SOLUTION ----------");
+//        for (boolean[][] rows : solution) {
+//            for (boolean[] domainOfCell : rows) {
+//                for (int i = 0; i < domainOfCell.length; i++) {
+//                    if (domainOfCell[i]) {
+//                        System.out.print(i + " ");
+//                        break;
+//                    }
+//                }
+//            }
+//            System.out.println();
+//        }
     }
 
     private boolean[][][] fillDomain() {
@@ -158,6 +162,8 @@ class LatinSquareSolver extends Solver {
     //
     @Override
     void startBackTracking() {
+        time = System.nanoTime();
+
         backTrackingRecursionCounter = 0;
 
         boolean[][][] solution = new boolean[n][n][n];
