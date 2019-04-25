@@ -132,17 +132,17 @@ class QueenSolver extends Solver {
     }
 
     private void printSolution(boolean[][] solution) {
-//        System.out.println("---------- SOLUTION ----------");
-//        for (boolean[] rows : solution) {
-//            for (boolean canBePlacedHere : rows) {
-//                if (canBePlacedHere) {
-//                    System.out.print("Q ");
-//                } else {
-//                    System.out.print("□ ");
-//                }
-//            }
-//            System.out.println();
-//        }
+        System.out.println("---------- SOLUTION ----------");
+        for (boolean[] rows : solution) {
+            for (boolean canBePlacedHere : rows) {
+                if (canBePlacedHere) {
+                    System.out.print("Q ");
+                } else {
+                    System.out.print("□ ");
+                }
+            }
+            System.out.println();
+        }
     }
 
     private boolean[][] fillDomain() {

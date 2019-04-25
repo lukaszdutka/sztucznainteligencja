@@ -133,18 +133,18 @@ class LatinSquareSolver extends Solver {
     }
 
     private void printSolution(boolean[][][] solution) {
-//        System.out.println("---------- SOLUTION ----------");
-//        for (boolean[][] rows : solution) {
-//            for (boolean[] domainOfCell : rows) {
-//                for (int i = 0; i < domainOfCell.length; i++) {
-//                    if (domainOfCell[i]) {
-//                        System.out.print(i + " ");
-//                        break;
-//                    }
-//                }
-//            }
-//            System.out.println();
-//        }
+        System.out.println("---------- SOLUTION ----------");
+        for (boolean[][] rows : solution) {
+            for (boolean[] domainOfCell : rows) {
+                for (int i = 0; i < domainOfCell.length; i++) {
+                    if (domainOfCell[i]) {
+                        System.out.print(i + " ");
+                        break;
+                    }
+                }
+            }
+            System.out.println();
+        }
     }
 
     private boolean[][][] fillDomain() {

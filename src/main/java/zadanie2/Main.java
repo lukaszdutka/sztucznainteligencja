@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("\tQ-BT\tQ-FC\tLS-BT\tLS-FC");
-        for (int n = 4; n <= 15; n++) {
+        for (int n = 10; n <= 10; n++) {
 
             System.out.print(n+"\t");
             Solver queenSolver = new QueenSolver(n);
