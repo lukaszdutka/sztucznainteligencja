@@ -162,4 +162,11 @@ class StrategoUtils {
         return true;
     }
 
+    static GameCell[][] copy(GameCell[][] oldBoard) {
+        GameCell[][] board = new GameCell[oldBoard.length][oldBoard.length];
+        for(int i = 0; i < board.length; i++){
+            System.arraycopy(oldBoard[i], 0, board[i], 0, board.length);
+        }
+        return board;
+    }
 }
