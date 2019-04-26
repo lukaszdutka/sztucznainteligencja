@@ -2,26 +2,15 @@ package zadanie3;
 
 import zadanie3.algorithm.Algorithm;
 import zadanie3.algorithm.Minimax;
-import zadanie3.algorithm.MinimaxAlphaBeta;
 import zadanie3.evaluation.Evaluation;
-import zadanie3.evaluation.NoEvaluation;
 import zadanie3.evaluation.PointsEvaluation;
-import zadanie3.order.FirstFirstOrder;
 import zadanie3.order.OrderOfSearch;
 import zadanie3.order.RandomOrder;
 import zadanie3.player.ComputerPlayer;
 import zadanie3.player.HumanPlayer;
 import zadanie3.player.Player;
 
-import java.util.ArrayList;
-
 public class Main {
-
-    private static ArrayList<StrategoMove> nextComputerMove;
-
-    //should be even
-    private final static int DEPTH_OF_WHITE_PLAYER = 2;
-    private final static int DEPTH_OF_BLACK_PLAYER = 2;
 
     public static void main(String[] args) {
         //⚪, ⚫, ⃞
