@@ -36,10 +36,7 @@ public class StrategoGame {
     }
 
     private void makeMove(int row, int column, boolean notify) {
-        if (row < 0 || row >= board.length || column < 0 || column >= board.length) {
-            return;
-        }
-        if (board[row][column] != PlayerColor.EMPTY) {
+        if (!isCellFree(row, column)) {
             return;
         }
 
@@ -65,7 +62,7 @@ public class StrategoGame {
 
     }
 
-    public boolean isCellFree(int row, int column) {
+    boolean isCellFree(int row, int column) {
         if (Math.abs(row) >= board.length || Math.abs(column) >= board.length) {
             return false;
         }
@@ -124,7 +121,7 @@ public class StrategoGame {
         this.lastMove = lastMove;
     }
 
-    public StrategoGame copy() {
+    StrategoGame copy() {
         StrategoGame game = new StrategoGame();
 
         game.setBoard(StrategoUtils.copy(board));

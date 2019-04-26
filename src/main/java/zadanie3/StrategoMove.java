@@ -2,8 +2,8 @@ package zadanie3;
 
 public class StrategoMove {
 
-    int row;
-    int column;
+    private int row;
+    private int column;
 
     public StrategoMove(int row, int column) {
         this.row = row;
@@ -14,16 +14,8 @@ public class StrategoMove {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getColumn() {
         return column;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
     }
 
     @Override
