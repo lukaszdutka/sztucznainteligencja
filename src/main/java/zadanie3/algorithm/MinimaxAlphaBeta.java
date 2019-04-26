@@ -1,6 +1,7 @@
 package zadanie3.algorithm;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import zadanie3.PlayerColor;
 import zadanie3.StrategoGame;
 import zadanie3.StrategoMove;
 import zadanie3.evaluation.Evaluation;
@@ -27,7 +28,7 @@ public class MinimaxAlphaBeta implements Algorithm {
     }
 
     @Override
-    public StrategoMove nextMove(StrategoGame game) {
+    public StrategoMove nextMove(StrategoGame game, PlayerColor color) {
         throw new NotImplementedException();
     }
 

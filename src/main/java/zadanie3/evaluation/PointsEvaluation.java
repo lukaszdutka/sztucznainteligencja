@@ -5,28 +5,25 @@ import zadanie3.StrategoGame;
 
 public class PointsEvaluation implements Evaluation {
 
-    private PlayerColor playerColor;
-
-    private PointsEvaluation(PlayerColor playerColor) {
-        this.playerColor = playerColor;
+    private PointsEvaluation() {
     }
 
-    public static PointsEvaluation create(PlayerColor playerColor) {
-        if (playerColor != PlayerColor.BLACK && playerColor != PlayerColor.WHITE) {
-            throw new IllegalArgumentException("PlayerColor should be black or white");
-        }
-        return new PointsEvaluation(playerColor);
+    public static PointsEvaluation create() {
+        return new PointsEvaluation();
     }
 
     @Override
-    public int evaluate(StrategoGame game) {
-        int evaluation = game.getWhiteScore() - game.getBlackScore();
+    public int evaluate(StrategoGame game, PlayerColor color) {
+        int white = game.getWhiteScore();
+        int black = game.getBlackScore();
 
-        if (playerColor == PlayerColor.WHITE) {
-            return evaluation;
-        } else {
-            return -evaluation;
+        if (color == PlayerColor.WHITE) {
+            return white - black;
+        } else if (color == PlayerColor.BLACK) {
+            return black - white;
         }
+
+        throw new IllegalArgumentException("Bad player color");
     }
 
     @Override

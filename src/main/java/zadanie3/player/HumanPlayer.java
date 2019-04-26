@@ -1,5 +1,6 @@
 package zadanie3.player;
 
+import zadanie3.PlayerColor;
 import zadanie3.StrategoGame;
 import zadanie3.StrategoMove;
 
@@ -10,13 +11,15 @@ public class HumanPlayer implements Player {
     private static final Scanner s = new Scanner(System.in);
 
     private String name;
+    private PlayerColor color;
 
-    private HumanPlayer(String name) {
+    private HumanPlayer(String name, PlayerColor color) {
         this.name = name;
+        this.color = color;
     }
 
-    public static HumanPlayer create(String name) {
-        return new HumanPlayer(name);
+    public static HumanPlayer create(String name, PlayerColor color) {
+        return new HumanPlayer(name, color);
     }
 
 

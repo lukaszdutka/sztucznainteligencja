@@ -5,18 +5,15 @@ import zadanie3.StrategoGame;
 
 public class NoEvaluation implements Evaluation {
 
-    private PlayerColor playerColor;
-
-    private NoEvaluation(PlayerColor playerColor) {
-        this.playerColor = playerColor;
+    private NoEvaluation() {
     }
 
-    public static NoEvaluation create(PlayerColor playerColor) {
-        return new NoEvaluation(playerColor);
+    public static NoEvaluation create() {
+        return new NoEvaluation();
     }
 
     @Override
-    public int evaluate(StrategoGame game) {
+    public int evaluate(StrategoGame game, PlayerColor color) {
         return 0;
     }
 

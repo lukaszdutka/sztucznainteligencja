@@ -3,6 +3,7 @@ package zadanie3;
 import zadanie3.algorithm.Algorithm;
 import zadanie3.algorithm.Minimax;
 import zadanie3.evaluation.Evaluation;
+import zadanie3.evaluation.NoEvaluation;
 import zadanie3.evaluation.PointsEvaluation;
 import zadanie3.order.OrderOfSearch;
 import zadanie3.order.RandomOrder;
@@ -19,8 +20,8 @@ public class Main {
         StrategoGame game = StrategoGame.create(n);
 
 
-        Evaluation eval = PointsEvaluation.create(PlayerColor.BLACK);
-//        Evaluation eval = NoEvaluation.create(PlayerColor.BLACK);
+        Evaluation eval = PointsEvaluation.create();
+//        Evaluation eval = NoEvaluation.create();
 
 //        OrderOfSearch order = FirstFirstOrder.create();
         OrderOfSearch order = RandomOrder.create();
@@ -29,8 +30,8 @@ public class Main {
 //        Algorithm alg = MinimaxAlphaBeta.create(pointsEvaluation, firstFirst, 2);
 
 
-        Player firstPlayer = HumanPlayer.create("Lukasz");
-        Player secondPlayer = ComputerPlayer.create("Minimax-points-random Bot", alg);
+        Player firstPlayer = HumanPlayer.create("Lukasz", PlayerColor.WHITE);
+        Player secondPlayer = ComputerPlayer.create("Minimax-points-random Bot", PlayerColor.BLACK, alg);
 
         while (!game.isOver()) {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");

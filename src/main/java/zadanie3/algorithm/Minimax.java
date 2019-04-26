@@ -2,6 +2,7 @@ package zadanie3.algorithm;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import zadanie3.MiniMaxUtils;
+import zadanie3.PlayerColor;
 import zadanie3.StrategoGame;
 import zadanie3.StrategoMove;
 import zadanie3.evaluation.Evaluation;
@@ -30,7 +31,7 @@ public class Minimax implements Algorithm {
     }
 
     @Override
-    public StrategoMove nextMove(StrategoGame game) {
+    public StrategoMove nextMove(StrategoGame game, PlayerColor color) {
 
 //        private static int minimax(StrategoGame game, int depth, boolean maximizingPlayer) {
 //            if (depth == 0 || game.isOver()) {
