@@ -2,12 +2,12 @@ package zadanie3;
 
 public class StrategoGame {
 
-    private GameCell[][] board;
+    private PlayerColor[][] board;
 
     private int whiteScore;
     private int blackScore;
 
-    private GameCell whoseTurn;
+    private PlayerColor whoseTurn;
 
     private StrategoMove lastMove;
 
@@ -19,7 +19,7 @@ public class StrategoGame {
         board = StrategoUtils.createEmptyBoard(boardSize);
         whiteScore = 0;
         blackScore = 0;
-        whoseTurn = GameCell.WHITE_PIECE;
+        whoseTurn = PlayerColor.WHITE;
     }
 
     static StrategoGame create(int boardSize) {
@@ -35,11 +35,11 @@ public class StrategoGame {
         makeMove(row, column, false);
     }
 
-    void makeMove(int row, int column, boolean notify) {
+    private void makeMove(int row, int column, boolean notify) {
         if (row < 0 || row >= board.length || column < 0 || column >= board.length) {
             return;
         }
-        if (board[row][column] != GameCell.EMPTY) {
+        if (board[row][column] != PlayerColor.EMPTY) {
             return;
         }
 
@@ -57,9 +57,9 @@ public class StrategoGame {
     private void addPointsBasedOnMove(int row, int column) {
         int pointsToAdd = StrategoUtils.pointsToAdd(board, row, column);
 
-        if (whoseTurn == GameCell.WHITE_PIECE) {
+        if (whoseTurn == PlayerColor.WHITE) {
             whiteScore += pointsToAdd;
-        } else if (whoseTurn == GameCell.BLACK_PIECE) {
+        } else if (whoseTurn == PlayerColor.BLACK) {
             blackScore += pointsToAdd;
         }
 
@@ -69,7 +69,7 @@ public class StrategoGame {
         if (Math.abs(row) >= board.length || Math.abs(column) >= board.length) {
             return false;
         }
-        return board[row][column] == GameCell.EMPTY;
+        return board[row][column] == PlayerColor.EMPTY;
     }
 
     boolean isOver() {
@@ -84,11 +84,11 @@ public class StrategoGame {
         StrategoUtils.printAtEnd(whiteScore, blackScore);
     }
 
-    public GameCell[][] getBoard() {
+    public PlayerColor[][] getBoard() {
         return board;
     }
 
-    public void setBoard(GameCell[][] board) {
+    public void setBoard(PlayerColor[][] board) {
         this.board = board;
     }
 
@@ -108,11 +108,11 @@ public class StrategoGame {
         this.blackScore = blackScore;
     }
 
-    public GameCell getWhoseTurn() {
+    public PlayerColor getWhoseTurn() {
         return whoseTurn;
     }
 
-    public void setWhoseTurn(GameCell whoseTurn) {
+    public void setWhoseTurn(PlayerColor whoseTurn) {
         this.whoseTurn = whoseTurn;
     }
 

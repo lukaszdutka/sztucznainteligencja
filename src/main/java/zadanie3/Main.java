@@ -1,7 +1,19 @@
 package zadanie3;
 
+import zadanie3.algorithm.Algorithm;
+import zadanie3.algorithm.Minimax;
+import zadanie3.algorithm.MinimaxAlphaBeta;
+import zadanie3.evaluation.Evaluation;
+import zadanie3.evaluation.NoEvaluation;
+import zadanie3.evaluation.PointsEvaluation;
+import zadanie3.order.FirstFirstOrder;
+import zadanie3.order.OrderOfSearch;
+import zadanie3.order.RandomOrder;
+import zadanie3.player.ComputerPlayer;
+import zadanie3.player.HumanPlayer;
+import zadanie3.player.Player;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 
@@ -15,32 +27,31 @@ public class Main {
         //⚪, ⚫, ⃞
 
         int n = 8;
-
         StrategoGame game = StrategoGame.create(n);
 
-        Scanner s = new Scanner(System.in);
+
+        Evaluation eval = PointsEvaluation.create(PlayerColor.BLACK);
+//        Evaluation eval = NoEvaluation.create(PlayerColor.BLACK);
+
+//        OrderOfSearch order = FirstFirstOrder.create();
+        OrderOfSearch order = RandomOrder.create();
+
+        Algorithm alg = Minimax.create(eval, order, 2);
+//        Algorithm alg = MinimaxAlphaBeta.create(pointsEvaluation, firstFirst, 2);
+
+
+        Player firstPlayer = HumanPlayer.create("Lukasz");
+        Player secondPlayer = ComputerPlayer.create("Minimax-points-random Bot", alg);
 
         while (!game.isOver()) {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
             game.printBoardAndScore();
 
-            if (game.getWhoseTurn() == GameCell.WHITE_PIECE) {
-                System.out.println("Computer is calculating move.");
-
-                //not sure about this bot playing, might be bad
-//                minimax(game, DEPTH_OF_WHITE_PLAYER, false);
-//                StrategoMove move = MiniMaxUtils.getRandomMove(nextComputerMove);
-//                game.makeMoveWithNotification(move.getRow(), move.getColumn());
-
-                System.out.println("Where do you want to put next piece? row and column.");
-                int row = s.nextInt();
-                int column = s.nextInt();
-                game.makeMoveWithNotification(row, column);
+            if (game.getWhoseTurn() == PlayerColor.WHITE) {
+                StrategoMove move = firstPlayer.nextMove(game);
+                game.makeMoveWithNotification(move.getRow(), move.getColumn());
             } else {
-                System.out.println("Computer is calculating move.");
-                minimax(game, DEPTH_OF_BLACK_PLAYER, true);
-
-                StrategoMove move = MiniMaxUtils.getRandomMove(nextComputerMove);
+                StrategoMove move = secondPlayer.nextMove(game);
                 game.makeMoveWithNotification(move.getRow(), move.getColumn());
             }
 
@@ -48,47 +59,6 @@ public class Main {
 
         game.printBoardAndScore();
         game.printAtEnd();
-    }
-
-    private static int minimax(StrategoGame game, int depth, boolean maximizingPlayer) {
-        if (depth == 0 || game.isOver()) {
-            return MiniMaxUtils.evaluate(game);
-        }
-
-        if (maximizingPlayer) {
-            int maxEvaluation = Integer.MIN_VALUE;
-
-            for (StrategoGame nextBoard : MiniMaxUtils.getNextMoves(game)) {
-                int evaluation = minimax(nextBoard, depth - 1, false);
-                if (evaluation >= maxEvaluation && depth == DEPTH_OF_BLACK_PLAYER) {
-                    if(evaluation == maxEvaluation){
-                        nextComputerMove.add(nextBoard.getLastMove());
-                    } else {
-                        nextComputerMove = new ArrayList<>();
-                        nextComputerMove.add(nextBoard.getLastMove());
-                    }
-                }
-                maxEvaluation = Math.max(maxEvaluation, evaluation);
-            }
-            return maxEvaluation;
-        } else {
-            int minEvaluation = Integer.MAX_VALUE;
-            for (StrategoGame nextBoard : MiniMaxUtils.getNextMoves(game)) {
-                int evaluation = minimax(nextBoard, depth - 1, true);
-                if (evaluation <= minEvaluation && depth == DEPTH_OF_WHITE_PLAYER) {
-                    if(evaluation == minEvaluation){
-                        nextComputerMove.add(nextBoard.getLastMove());
-                    } else {
-                        nextComputerMove = new ArrayList<>();
-                        nextComputerMove.add(nextBoard.getLastMove());
-                    }
-                }
-                minEvaluation = Math.min(minEvaluation, evaluation);
-            }
-            return minEvaluation;
-        }
-
-
     }
 
 }

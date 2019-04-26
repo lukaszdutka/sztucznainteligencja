@@ -2,20 +2,20 @@ package zadanie3;
 
 class StrategoUtils {
 
-    static GameCell[][] createEmptyBoard(int boardSize) {
-        GameCell[][] board = new GameCell[boardSize][boardSize];
+    static PlayerColor[][] createEmptyBoard(int boardSize) {
+        PlayerColor[][] board = new PlayerColor[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                board[i][j] = GameCell.EMPTY;
+                board[i][j] = PlayerColor.EMPTY;
             }
         }
         return board;
     }
 
-    static boolean isGameOver(GameCell[][] board) {
-        for (GameCell[] row : board) {
-            for (GameCell cell : row) {
-                if (cell == GameCell.EMPTY) {
+    static boolean isGameOver(PlayerColor[][] board) {
+        for (PlayerColor[] row : board) {
+            for (PlayerColor cell : row) {
+                if (cell == PlayerColor.EMPTY) {
                     return false;
                 }
             }
@@ -23,21 +23,21 @@ class StrategoUtils {
         return true;
     }
 
-    static void printBoardAndScore(GameCell[][] board, int whiteScore, int blackScore, GameCell whoseTurn) {
+    static void printBoardAndScore(PlayerColor[][] board, int whiteScore, int blackScore, PlayerColor whoseTurn) {
         System.out.print("\t");
         for (int i = 0; i < board.length; i++) {
             System.out.print(i + "\t");
         }
         System.out.println();
         for (int i = 0; i < board.length; i++) {
-            GameCell[] row = board[i];
+            PlayerColor[] row = board[i];
             System.out.print(i + "\t");
-            for (GameCell cell : row) {
+            for (PlayerColor cell : row) {
                 switch (cell) {
-                    case WHITE_PIECE:
+                    case WHITE:
                         System.out.print("⚪\t");
                         break;
-                    case BLACK_PIECE:
+                    case BLACK:
                         System.out.print("⚫\t");
                         break;
                     case EMPTY:
@@ -71,16 +71,16 @@ class StrategoUtils {
         System.out.println("-------------------------");
     }
 
-    static GameCell nextPlayerFor(GameCell whoseTurn) {
-        if (whoseTurn == GameCell.WHITE_PIECE) {
-            return GameCell.BLACK_PIECE;
-        } else if (whoseTurn == GameCell.BLACK_PIECE) {
-            return GameCell.WHITE_PIECE;
+    static PlayerColor nextPlayerFor(PlayerColor whoseTurn) {
+        if (whoseTurn == PlayerColor.WHITE) {
+            return PlayerColor.BLACK;
+        } else if (whoseTurn == PlayerColor.BLACK) {
+            return PlayerColor.WHITE;
         }
-        throw new IllegalArgumentException("whoseTurn should be WHITE or BLACK piece enum from GameCell");
+        throw new IllegalArgumentException("whoseTurn should be WHITE or BLACK piece enum from PlayerColor");
     }
 
-    static int pointsToAdd(GameCell[][] board, int row, int column) {
+    static int pointsToAdd(PlayerColor[][] board, int row, int column) {
         int pointsToAdd = 0;
 
         if (columnIsFilled(board, column)) {
@@ -98,12 +98,12 @@ class StrategoUtils {
         return pointsToAdd;
     }
 
-    private static boolean upDownDiagonalIsFilled(GameCell[][] board, int row, int column) {
+    private static boolean upDownDiagonalIsFilled(PlayerColor[][] board, int row, int column) {
         int min = Math.min(row, column);
         row -= min;
         column -= min;
         while (row < board.length && column < board.length) {
-            if (board[row][column] == GameCell.EMPTY) {
+            if (board[row][column] == PlayerColor.EMPTY) {
                 return false;
             }
             row++;
@@ -120,7 +120,7 @@ class StrategoUtils {
         return points > 1 ? points : 0;
     }
 
-    private static boolean downUpDiagonalIsFilled(GameCell[][] board, int row, int column) {
+    private static boolean downUpDiagonalIsFilled(PlayerColor[][] board, int row, int column) {
         row += column; //there is some math magic to find most left-down point.
         column -= column;
         if (row >= board.length) {
@@ -129,7 +129,7 @@ class StrategoUtils {
             column += correct;
         }
         while (row >= 0 && column < board.length) {
-            if (board[row][column] == GameCell.EMPTY) {
+            if (board[row][column] == PlayerColor.EMPTY) {
                 return false;
             }
             row--;
@@ -143,28 +143,28 @@ class StrategoUtils {
         return upDownCalculatePoints(length, row, column);
     }
 
-    private static boolean rowIsFilled(GameCell[][] board, int rowIndex) {
-        GameCell[] row = board[rowIndex];
-        for (GameCell cell : row) {
-            if (cell == GameCell.EMPTY) {
+    private static boolean rowIsFilled(PlayerColor[][] board, int rowIndex) {
+        PlayerColor[] row = board[rowIndex];
+        for (PlayerColor cell : row) {
+            if (cell == PlayerColor.EMPTY) {
                 return false;
             }
         }
         return true;
     }
 
-    private static boolean columnIsFilled(GameCell[][] board, int column) {
-        for (GameCell[] row : board) {
-            if (row[column] == GameCell.EMPTY) {
+    private static boolean columnIsFilled(PlayerColor[][] board, int column) {
+        for (PlayerColor[] row : board) {
+            if (row[column] == PlayerColor.EMPTY) {
                 return false;
             }
         }
         return true;
     }
 
-    static GameCell[][] copy(GameCell[][] oldBoard) {
-        GameCell[][] board = new GameCell[oldBoard.length][oldBoard.length];
-        for(int i = 0; i < board.length; i++){
+    static PlayerColor[][] copy(PlayerColor[][] oldBoard) {
+        PlayerColor[][] board = new PlayerColor[oldBoard.length][oldBoard.length];
+        for (int i = 0; i < board.length; i++) {
             System.arraycopy(oldBoard[i], 0, board[i], 0, board.length);
         }
         return board;
