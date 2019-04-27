@@ -1,13 +1,12 @@
 package zadanie3.order;
 
+import zadanie3.StrategoGame;
 import zadanie3.StrategoMove;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 
 public class RandomOrder implements OrderOfSearch {
-
-    private final Random R = new Random();
 
     private RandomOrder() {
     }
@@ -17,9 +16,10 @@ public class RandomOrder implements OrderOfSearch {
     }
 
     @Override
-    public StrategoMove getNextMove(ArrayList<StrategoMove> moves) {
-        int size = moves.size();
-        return size > 0 ? moves.get(R.nextInt(size)) : null;
+    public ArrayList<StrategoGame> getOrderedMoves(ArrayList<StrategoGame> oldMoves) {
+        ArrayList<StrategoGame> moves = new ArrayList<>(oldMoves);
+        Collections.shuffle(moves);
+        return moves;
     }
 
     @Override

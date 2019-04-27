@@ -3,10 +3,9 @@ package zadanie3;
 import zadanie3.algorithm.Algorithm;
 import zadanie3.algorithm.Minimax;
 import zadanie3.evaluation.Evaluation;
-import zadanie3.evaluation.NoEvaluation;
 import zadanie3.evaluation.PointsEvaluation;
 import zadanie3.order.OrderOfSearch;
-import zadanie3.order.RandomOrder;
+import zadanie3.order.PointsOrder;
 import zadanie3.player.ComputerPlayer;
 import zadanie3.player.HumanPlayer;
 import zadanie3.player.Player;
@@ -23,11 +22,12 @@ public class Main {
         Evaluation eval = PointsEvaluation.create();
 //        Evaluation eval = NoEvaluation.create();
 
-//        OrderOfSearch order = FirstFirstOrder.create();
-        OrderOfSearch order = RandomOrder.create();
+//        OrderOfSearch order = DefaultOrder.create();
+//        OrderOfSearch order = RandomOrder.create();
+        OrderOfSearch order = PointsOrder.create(eval);
 
         Algorithm alg = Minimax.create(eval, order, 2);
-//        Algorithm alg = MinimaxAlphaBeta.create(pointsEvaluation, firstFirst, 2);
+//        Algorithm alg = MinimaxAlphaBeta.create(eval, order, 2);
 
 
         Player firstPlayer = HumanPlayer.create("Lukasz", PlayerColor.WHITE);

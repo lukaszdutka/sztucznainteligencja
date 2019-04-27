@@ -1,14 +1,11 @@
 package zadanie3.algorithm;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import zadanie3.MiniMaxUtils;
 import zadanie3.PlayerColor;
 import zadanie3.StrategoGame;
 import zadanie3.StrategoMove;
 import zadanie3.evaluation.Evaluation;
 import zadanie3.order.OrderOfSearch;
-
-import java.util.ArrayList;
 
 public class Minimax implements Algorithm {
 
