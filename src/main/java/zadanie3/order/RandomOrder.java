@@ -23,6 +23,11 @@ public class RandomOrder implements OrderOfSearch {
     }
 
     @Override
+    public ArrayList<StrategoGame> getAntiOrderedMoves(ArrayList<StrategoGame> moves) {
+        return getOrderedMoves(moves); //no change needed
+    }
+
+    @Override
     public String getName() {
         return "random";
     }

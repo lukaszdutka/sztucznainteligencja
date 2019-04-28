@@ -1,11 +1,13 @@
 package zadanie3.algorithm;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import zadanie3.MiniMaxUtils;
 import zadanie3.PlayerColor;
 import zadanie3.StrategoGame;
 import zadanie3.StrategoMove;
 import zadanie3.evaluation.Evaluation;
 import zadanie3.order.OrderOfSearch;
+
+import java.util.ArrayList;
 
 public class Minimax implements Algorithm {
 
@@ -15,7 +17,7 @@ public class Minimax implements Algorithm {
     private OrderOfSearch order;
 
     private Minimax(int depth, Evaluation evaluation, OrderOfSearch order) {
-        this.DEPTH = depth;
+        this.DEPTH = 2 * depth;
         this.evaluation = evaluation;
         this.order = order;
     }
@@ -29,49 +31,65 @@ public class Minimax implements Algorithm {
 
     @Override
     public StrategoMove nextMove(StrategoGame game, PlayerColor color) {
-
-//        private static int minimax(StrategoGame game, int depth, boolean maximizingPlayer) {
-//            if (depth == 0 || game.isOver()) {
-//                return MiniMaxUtils.evaluate(game);
-//            }
-//
-//            if (maximizingPlayer) {
-//                int maxEvaluation = Integer.MIN_VALUE;
-//
-//                for (StrategoGame nextBoard : MiniMaxUtils.getNextMoves(game)) {
-//                    int evaluation = minimax(nextBoard, depth - 1, false);
-//                    if (evaluation >= maxEvaluation && depth == DEPTH_OF_BLACK_PLAYER) {
-//                        if (evaluation == maxEvaluation) {
-//                            nextComputerMove.add(nextBoard.getLastMove());
-//                        } else {
-//                            nextComputerMove = new ArrayList<>();
-//                            nextComputerMove.add(nextBoard.getLastMove());
-//                        }
-//                    }
-//                    maxEvaluation = Math.max(maxEvaluation, evaluation);
-//                }
-//                return maxEvaluation;
-//            } else {
-//                int minEvaluation = Integer.MAX_VALUE;
-//                for (StrategoGame nextBoard : MiniMaxUtils.getNextMoves(game)) {
-//                    int evaluation = minimax(nextBoard, depth - 1, true);
-//                    if (evaluation <= minEvaluation && depth == DEPTH_OF_WHITE_PLAYER) {
-//                        if (evaluation == minEvaluation) {
-//                            nextComputerMove.add(nextBoard.getLastMove());
-//                        } else {
-//                            nextComputerMove = new ArrayList<>();
-//                            nextComputerMove.add(nextBoard.getLastMove());
-//                        }
-//                    }
-//                    minEvaluation = Math.min(minEvaluation, evaluation);
-//                }
-//                return minEvaluation;
-//            }
-//
-//        }
-
-        throw new NotImplementedException();
+        return minimax(game, DEPTH);
     }
+
+    private StrategoMove minimax(StrategoGame game, int depth) {
+        ArrayList<StrategoGame> games = new ArrayList<>();
+
+        minimaxRec(game, depth, true, games);
+
+        return games.get(0).getLastMove();
+    }
+
+    private int minimaxRec(StrategoGame game, int depth, boolean maximizingPlayer, ArrayList<StrategoGame> bestGames) {
+        if (depth == 0 || game.isOver()) {
+            return evaluation.evaluate(game, game.getWhoseTurn());
+        }
+
+        if (maximizingPlayer) {
+
+            int maxEvaluation = Integer.MIN_VALUE;
+            ArrayList<StrategoGame> moves = MiniMaxUtils.getNextMoves(game);
+            moves = order.getOrderedMoves(moves);
+
+            for (StrategoGame nextBoard : moves) {
+
+                int evaluation = minimaxRec(nextBoard, depth - 1, false, null);
+                //update possible games list
+                if (depth == DEPTH && evaluation >= maxEvaluation) {
+                    if (evaluation > maxEvaluation) {
+                        bestGames.clear();
+                    }
+                    bestGames.add(nextBoard);
+                }
+                maxEvaluation = Math.max(maxEvaluation, evaluation);
+            }
+            return maxEvaluation;
+
+        } else {
+
+            int minEvaluation = Integer.MAX_VALUE;
+
+            ArrayList<StrategoGame> moves = MiniMaxUtils.getNextMoves(game);
+            moves = order.getAntiOrderedMoves(moves);
+
+            for (StrategoGame nextBoard : moves) {
+                int evaluation = minimaxRec(nextBoard, depth - 1, true, null);
+
+                if (depth == DEPTH && evaluation <= minEvaluation) {
+                    if (evaluation < minEvaluation) {
+                        bestGames.clear();
+                    }
+                    bestGames.add(nextBoard);
+                }
+                minEvaluation = Math.min(minEvaluation, evaluation);
+            }
+            return minEvaluation;
+        }
+
+    }
+
 
     @Override
     public String getName() {

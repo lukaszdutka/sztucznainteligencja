@@ -69,7 +69,7 @@ public class StrategoGame {
         return board[row][column] == PlayerColor.EMPTY;
     }
 
-    boolean isOver() {
+    public boolean isOver() {
         return StrategoUtils.isGameOver(board);
     }
 

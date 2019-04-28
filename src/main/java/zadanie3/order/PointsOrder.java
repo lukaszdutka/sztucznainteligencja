@@ -4,6 +4,7 @@ import zadanie3.StrategoGame;
 import zadanie3.evaluation.Evaluation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PointsOrder implements OrderOfSearch {
 
@@ -31,6 +32,13 @@ public class PointsOrder implements OrderOfSearch {
             return gamePointsOne - gamePointsTwo;
         });
         return moves;
+    }
+
+    @Override
+    public ArrayList<StrategoGame> getAntiOrderedMoves(ArrayList<StrategoGame> moves) {
+        ArrayList<StrategoGame> ordered = getOrderedMoves(moves);
+        Collections.reverse(ordered); //antiordered
+        return ordered;
     }
 
     private boolean canBeComparable(StrategoGame game1, StrategoGame game2) {
