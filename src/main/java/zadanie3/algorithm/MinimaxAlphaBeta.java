@@ -63,7 +63,6 @@ public class MinimaxAlphaBeta implements Algorithm {
         if (depth == 0 || game.isOver()) {
             return evaluation.evaluate(game, game.getWhoseTurn());
         }
-
         if (maximizingPlayer) {
             int maxEvaluation = Integer.MIN_VALUE;
 
