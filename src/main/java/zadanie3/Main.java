@@ -2,6 +2,7 @@ package zadanie3;
 
 import zadanie3.algorithm.Algorithm;
 import zadanie3.algorithm.Minimax;
+import zadanie3.algorithm.MinimaxAlphaBeta;
 import zadanie3.evaluation.Evaluation;
 import zadanie3.evaluation.PointsEvaluation;
 import zadanie3.order.OrderOfSearch;
@@ -25,9 +26,9 @@ public class Main {
 //        OrderOfSearch order = RandomOrder.create();
         OrderOfSearch order = PointsOrder.create(eval);
 
-        Algorithm alg = Minimax.create(eval, order, 1);
-        Algorithm alg2 = Minimax.create(eval, order, 1);
-//        Algorithm alg = MinimaxAlphaBeta.create(eval, order, 2);
+        Algorithm alg = Minimax.create(eval, order, 2);
+//        Algorithm alg2 = Minimax.create(eval, order, 2);
+        Algorithm alg2 = MinimaxAlphaBeta.create(eval, order, 3);
 
         //62:34 dla algorytmów takich samych
         //55:41 dla algorytmów 1 i 2

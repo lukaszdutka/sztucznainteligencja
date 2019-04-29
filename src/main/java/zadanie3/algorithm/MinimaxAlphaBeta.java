@@ -16,8 +16,10 @@ public class MinimaxAlphaBeta implements Algorithm {
     private Evaluation evaluation;
     private OrderOfSearch order;
 
+    private int[] statistics;
+
     private MinimaxAlphaBeta(int depth, Evaluation evaluation, OrderOfSearch order) {
-        this.DEPTH = depth;
+        this.DEPTH = 2 * depth;
         this.evaluation = evaluation;
         this.order = order;
     }
@@ -35,22 +37,36 @@ public class MinimaxAlphaBeta implements Algorithm {
     }
 
     private StrategoMove minimax(StrategoGame game, int depth) {
+        statistics = initializeStatistics();
+
         ArrayList<StrategoGame> games = new ArrayList<>();
 
         minimaxAlphaBeta(game, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true, games);
 
+        printStatistics(statistics);
         return games.get(0).getLastMove();
+    }
+
+    private void printStatistics(int[] statistics) {
+        System.out.println("Depth\tnumber of cuts");
+        for (int i = 0; i < statistics.length; i++) {
+            System.out.println(i + "\t" + statistics[i]);
+        }
+    }
+
+    private int[] initializeStatistics() {
+        return new int[DEPTH + 1];
     }
 
 
     private int minimaxAlphaBeta(StrategoGame game, int depth, int alpha, int beta, boolean maximizingPlayer, ArrayList<StrategoGame> bestGames) {
         if (depth == 0 || game.isOver()) {
-            // TODO: 27/04/2019 something wrong with evaluate prawdopodobnie, bo co jak zwróci eval dla złego gracza?
             return evaluation.evaluate(game, game.getWhoseTurn());
         }
 
         if (maximizingPlayer) {
             int maxEvaluation = Integer.MIN_VALUE;
+
             ArrayList<StrategoGame> moves = MiniMaxUtils.getNextMoves(game);
             moves = order.getOrderedMoves(moves);
 
@@ -64,7 +80,15 @@ public class MinimaxAlphaBeta implements Algorithm {
                     }
                     bestGames.add(nextBoard);
                 }
+
                 maxEvaluation = Math.max(maxEvaluation, evaluation);
+                alpha = Math.max(alpha, evaluation);
+
+                if (beta <= alpha) {
+                    statistics[depth]++;
+                    break;
+                }
+
             }
             return maxEvaluation;
 
@@ -83,6 +107,11 @@ public class MinimaxAlphaBeta implements Algorithm {
                     bestGames.add(nextBoard);
                 }
                 minEvaluation = Math.min(minEvaluation, evaluation);
+                beta = Math.min(beta, evaluation);
+                if (beta <= alpha) {
+                    statistics[depth]++;
+                    break;
+                }
             }
             return minEvaluation;
 
