@@ -1,20 +1,17 @@
 package zadanie3.order;
 
 import zadanie3.StrategoGame;
-import zadanie3.evaluation.Evaluation;
 
 import java.util.ArrayList;
 
 public class DefaultOrder implements OrderOfSearch {
 
-    private final Evaluation evaluation;
 
-    private DefaultOrder(Evaluation evaluation) {
-        this.evaluation = evaluation;
+    private DefaultOrder() {
     }
 
-    public static DefaultOrder create(Evaluation evaluation) {
-        return new DefaultOrder(evaluation);
+    public static DefaultOrder create() {
+        return new DefaultOrder();
     }
 
     @Override

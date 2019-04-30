@@ -9,24 +9,24 @@ import zadanie3.order.OrderOfSearch;
 
 import java.util.ArrayList;
 
-public class Minimax implements Algorithm {
+public class Minmax implements Algorithm {
 
     private final int DEPTH;
 
     private Evaluation evaluation;
     private OrderOfSearch order;
 
-    private Minimax(int depth, Evaluation evaluation, OrderOfSearch order) {
+    private Minmax(int depth, Evaluation evaluation, OrderOfSearch order) {
         this.DEPTH = 2 * depth;
         this.evaluation = evaluation;
         this.order = order;
     }
 
-    public static Minimax create(Evaluation evaluation, OrderOfSearch order, int depth) {
+    public static Minmax create(Evaluation evaluation, OrderOfSearch order, int depth) {
         if (depth <= 0 || order == null || evaluation == null) {
             throw new IllegalArgumentException("Evaluation or order is null or depth is not positive.");
         }
-        return new Minimax(depth, evaluation, order);
+        return new Minmax(depth, evaluation, order);
     }
 
     @Override
