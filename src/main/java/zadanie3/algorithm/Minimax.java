@@ -35,10 +35,13 @@ public class Minimax implements Algorithm {
     }
 
     private StrategoMove minimax(StrategoGame game, int depth) {
+        long before = System.currentTimeMillis();
         ArrayList<StrategoGame> games = new ArrayList<>();
 
         minimaxRec(game, depth, true, games);
 
+        long after = System.currentTimeMillis();
+        System.out.println((after - before));
         return games.get(0).getLastMove();
     }
 

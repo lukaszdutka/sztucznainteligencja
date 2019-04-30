@@ -27,7 +27,7 @@ public class ComputerPlayer implements Player {
 
     @Override
     public StrategoMove nextMove(StrategoGame game) {
-        System.out.println("Computer is calculating move.");
+//        System.out.println("Computer is calculating move.");
         return algorithm.nextMove(game, color);
     }
 

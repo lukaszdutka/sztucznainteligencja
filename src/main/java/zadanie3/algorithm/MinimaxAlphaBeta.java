@@ -37,13 +37,16 @@ public class MinimaxAlphaBeta implements Algorithm {
     }
 
     private StrategoMove minimax(StrategoGame game, int depth) {
-        statistics = initializeStatistics();
+//        statistics = initializeStatistics();
+        long before = System.currentTimeMillis();
 
         ArrayList<StrategoGame> games = new ArrayList<>();
-
         minimaxAlphaBeta(game, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true, games);
 
-        printStatistics(statistics);
+        long after = System.currentTimeMillis();
+        System.out.println((after - before));
+//        printStatistics(statistics);
+
         return games.get(0).getLastMove();
     }
 
@@ -84,7 +87,7 @@ public class MinimaxAlphaBeta implements Algorithm {
                 alpha = Math.max(alpha, evaluation);
 
                 if (beta <= alpha) {
-                    statistics[depth]++;
+//                    statistics[depth]++;
                     break;
                 }
 
@@ -108,7 +111,7 @@ public class MinimaxAlphaBeta implements Algorithm {
                 minEvaluation = Math.min(minEvaluation, evaluation);
                 beta = Math.min(beta, evaluation);
                 if (beta <= alpha) {
-                    statistics[depth]++;
+//                    statistics[depth]++;
                     break;
                 }
             }

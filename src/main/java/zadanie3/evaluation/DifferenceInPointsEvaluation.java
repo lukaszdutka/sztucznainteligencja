@@ -3,13 +3,13 @@ package zadanie3.evaluation;
 import zadanie3.PlayerColor;
 import zadanie3.StrategoGame;
 
-public class PointsEvaluation implements Evaluation {
+public class DifferenceInPointsEvaluation implements Evaluation {
 
-    private PointsEvaluation() {
+    private DifferenceInPointsEvaluation() {
     }
 
-    public static PointsEvaluation create() {
-        return new PointsEvaluation();
+    public static DifferenceInPointsEvaluation create() {
+        return new DifferenceInPointsEvaluation();
     }
 
     @Override
