@@ -26,13 +26,16 @@ public class Main {
         Evaluation eval1 = DifferenceInPointsEvaluation.create();
         Evaluation eval2 = NoEvaluation.create();
         Evaluation eval3 = MaxYourPointsEvaluation.create();
+        Evaluation eval4 = DifferenceInPointsSquaredEvaluation.create();
 
         OrderOfSearch order1 = DefaultOrder.create();
         OrderOfSearch order2 = RandomOrder.create();
         OrderOfSearch order3 = PointsOrder.create(eval1);
+        OrderOfSearch order4 = PointsOrder.create(eval4);
 
-        Algorithm minmaxAlphaBeta = MinimaxAlphaBeta.create(eval1, order3, 2);
-        Algorithm minmaxAlphaBeta2 = MinimaxAlphaBeta.create(eval1, order3, 2);
+        Algorithm minmaxAlphaBeta = MinimaxAlphaBeta.create(eval1, order3, 3);
+//        Algorithm minmaxAlphaBeta2 = MinimaxAlphaBeta.create(eval1, order3, 3);
+        Algorithm minmaxAlphaBeta2 = MinimaxAlphaBeta.create(eval4, order4, 3);
 
         //62:34 dla algorytmów takich samych
         //55:41 dla algorytmów 1 i 2
@@ -44,8 +47,8 @@ public class Main {
         //130:122 dla minimaxów alpha-beta dla głębokiści 3:3
         //122:130 dla drugiego, dla czarnych. najsuuu jak bedzie dla 2:3?
 
-        Player firstPlayer = HumanPlayer.create("Lukasz", PlayerColor.WHITE);
-//        Player firstPlayer = ComputerPlayer.create("Minmax-points-random Bot", PlayerColor.WHITE, minmaxAlphaBeta);
+//        Player firstPlayer = HumanPlayer.create("Lukasz", PlayerColor.WHITE);
+        Player firstPlayer = ComputerPlayer.create("Minmax-points-random Bot", PlayerColor.WHITE, minmaxAlphaBeta);
         Player secondPlayer = ComputerPlayer.create("Minmax-points-random Bot", PlayerColor.BLACK, minmaxAlphaBeta2);
 //        Player secondPlayer = HumanPlayer.create("Mateusz", PlayerColor.BLACK);
 
